@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="shortcut icon" type="image/png" href="/icon.png" />
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css">
+
+    <title>Bankist</title>
+</head>
+
+<body>
+
+    <main class="app">
+        <!-- BALANCE -->
+        <div class="balance">
+            <div>
+                <p class="balance__label">Current balance</p>
+                <p class="balance__date">
+                    As of <span class="date">05/03/2037</span>
+                </p>
+            </div>
+            <% if (checker===false) { %>
+                <script>alert('Insufficient Funds');</script>
+                <p class="balance__value">
+                    <%= balance %>
+                </p>
+                <% } else { %>
+                    <p class="balance__value">
+                        <%= balance %>
+                    </p>
+                    <% } %>
+
+        </div>
+
+        <!-- MOVEMENTS -->
+        <div class="movements">
+            <% for (let i=0; i<transactions.length; i++) { %>
+                <% if (transactions[i].type==="Deposit" ) { %>
+                    <div class="movements__row">
+                        <div class="movements__type movements__type--deposit">
+                            <%= i+1 %> deposit>
+                        </div>
+                        <div class="movements__date">
+                            <%= transactions[i].date %>
+                        </div>
+                        <div class="movements__value">
+                            <%= transactions[i].amount %> %>
+                        </div>
+                    </div>
+                    <% } else if (checker !=false) { %>
+                        <div class="movements__row">
+                            <div class="movements__type movements__type--withdrawal">
+                                <%= i+1 %> withdrawal
+                            </div>
+                            <div class="movements__date">
+                                <%= transactions[i].date %>
+                            </div>
+                            <div class="movements__reason">
+                                <%= transactions[i].reason%>
+                            </div>
+                            <div class="movements__value">
+                                <%= transactions[i].amount %>
+                            </div>
+
+                        </div>
+                        <% } %>
+
+                            <% } %>
+        </div>
+
+        <!-- SUMMARY -->
+        <div class="summary">
+            <p class="summary__label">In</p>
+            <p class="summary__value summary__value--in">
+                <%= deposits %>
+            </p>
+            <p class="summary__label">Out</p>
+            <p class="summary__value summary__value--out">
+                <%= withdrawals %>
+            </p>
+            <button type="button" class="form__btn--transfer" action="">CLEAR</button>
+            <p class="summary__value summary__value--interest"></p>
+            <button class="btn--sort">&downarrow; SORT</button>
+        </div>
+
+        <!-- OPERATION: EXPENSES -->
+        <div class="operation operation--transfer">
+            <h2>Expenses</h2>
+            <form class="form form--transfer" action="/expense" method="post">
+                <input type="number" name="expenseAmount" class="form__input form__input--to" />
+                <input type="text" name="expenseType" class="form__input form__input--amount" />
+                <button type="submit" class="form__btn form__btn--transfer">&rarr;</button>
+                <label class="form__label">Amount</label>
+                <label class="form__label">Reason</label>
+            </form>
+        </div>
+
+        <!-- OPERATION: LOAN -->
+        <div class="operation operation--loan">
+            <h2>Income</h2>
+            <form class="form form--loan" action="/income" method="post">
+                <input type="number" name="income" class="form__input form__input--loan-amount" />
+                <button type="submit class=" form__btn form__btn--loan">&rarr;</button>
+                <label class="form__label form__label--loan">Amount</label>
+            </form>
+        </div>
+        <br><br><br>
+
+        <!-- CLEAR -->
+
+        <!-- LOGOUT TIMER -->
+        <p class="logout-timer">
+            You will be logged out in <span class="timer">05:00</span>
+        </p>
+    </main>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+</body>
+
+</html>
